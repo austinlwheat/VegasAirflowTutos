@@ -11,7 +11,7 @@ from pipeline_tools import run_transform_gbq
 sql_root = Path(__file__).parent / 'sql'
 
 def main():
-    run_transform_gbq('staging', 'cleancrime_final', sql_root)
+    run_transform_gbq('staging', 'crimebase', sql_root)
 
 if __name__ == '__main__':
     main()

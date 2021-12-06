@@ -7,19 +7,19 @@ from pipeline_tools import local_file_to_gcs
 
 def main(ds):
     # Get the data necessary for the report.
-    corridors_df = pd.read_gbq('SELECT * FROM final.corridors')
-    corridors_df.geog = gpd.GeoSeries.from_wkt(corridors_df.geog)
-    corridors_gdf = gpd.GeoDataFrame(corridors_df, geometry='geog')
+    crime_df = pd.read_gbq('SELECT * FROM staging.crimebase')
+    crime_df.geog = gpd.GeoSeries.from_wkt(crime_df.geog)
+    crime_gdf = gpd.GeoDataFrame(corridors_df, geometry='the_geom')
 
-    overview_df = pd.read_gbq('SELECT * from final.corridors_overview')
+    overview_df = pd.read_gbq('SELECT * from staging.crimebase')
 
     # Render the data into the templates.
     env = Environment(loader=PackageLoader('generate_report'))
     template = env.get_template('index.html')
     output = template.render(
-        corridors=corridors_gdf.to_dict('records'),
+        crime=crime_gdf.to_dict('records'),
         overview=overview_df.to_dict('records')[0],
-        overview_map_data=corridors_gdf.to_json(),
+        overview_map_data=crime_gdf.to_json(),
     )
 
     # Determine the folder to save the rendered report pages into; create it if
@@ -32,7 +32,7 @@ def main(ds):
         local_file.write(output)
         local_file_to_gcs(
             local_file_name=local_file.name,
-            gcs_bucket_name='mjumbewu_musa509_2021_corridors',
+            gcs_bucket_name='1126_data',
             gcs_blob_name=f'{ds}/index.html',
             content_type='text/html,'
         )
