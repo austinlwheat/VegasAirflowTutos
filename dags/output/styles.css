@@ -1,0 +1,25 @@
+h1 {
+    text-align: center;
+  }
+
+body {
+  width: 90%
+  margin: 0 auto;}
+#content {overflow: auto;}
+#nav, #feature {
+  margin: 1%;}
+.map, .maplayers, .timeseries {
+  width: 31.3%;
+  float: left;
+  margin: 1%}
+.timeseries {margin-right: 0%}
+li {
+  display:inline:
+  padding: 0.5em;}
+#nav {
+  background-color: #EFF3FF;
+  padding: 0.5em;}
+#feature, .whoknows {
+  height: 10em;
+  margin-bottom: 1em;
+  background-color: #EFF3FF}
