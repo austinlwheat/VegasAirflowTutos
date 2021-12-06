@@ -54,13 +54,18 @@ x-airflow-common:
     AIRFLOW__CELERY__BROKER_URL: redis://:@redis:6379/0
     AIRFLOW__CORE__FERNET_KEY: ''
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
-    AIRFLOW__CORE__LOAD_EXAMPLES: 'true'
+    AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
     AIRFLOW__API__AUTH_BACKEND: 'airflow.api.auth.backend.basic_auth'
     _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-}
-  volumes:
+    PIPELINE_DATA_BUCKET: 1126_data
+    PIPELINE_PROJECT: final-509
+    PIPELINE_DATASET: musa_vegas_BQ
+    GOOGLE_APPLICATION_CREDENTIALS: /opt/google-app-creds.json
+ volumes:
     - ./dags:/opt/airflow/dags
     - ./logs:/opt/airflow/logs
     - ./plugins:/opt/airflow/plugins
+    - D:/graduate/MUSA509/YAY_Musa_509_final_project/data_pipeline/final-509-409489d51842.json:/opt/google-app-creds.json
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on
